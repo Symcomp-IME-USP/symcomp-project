@@ -2,87 +2,102 @@
 
 'use client'
 
-import { useState, FormEvent } from 'react'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
+
 import Image from 'next/image'
 
-const API_URL = 'http://127.0.0.1:8000/api'
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import VerifyCode from '@/lib/http/verify-code'
+
+const verificationSchema = z.object({
+  email: z.email(),
+  code: z.string(),
+})
+
+const email = localStorage.getItem('email') || ''
 
 export default function VerificarPage() {
-  const [code, setCode] = useState('')
-  const [error, setError] = useState('')
+  const form = useForm<z.infer<typeof verificationSchema>>({
+    resolver: zodResolver(verificationSchema),
+    defaultValues: {
+      email,
+      code: '',
+    },
+  })
 
-  const email = localStorage.getItem('email')
-  const isFormValid = code.length > 0
+  const { isPending, mutate } = useMutation({
+    mutationFn: async (values: z.infer<typeof verificationSchema>) => {
+      return await VerifyCode(values)
+    },
+    onSuccess: (data) => {
+      console.log('Verificação realizada com sucesso:', data)
+    },
+    onError: (error) => {
+      console.error('Erro na verificação:', error)
+    },
+  })
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const url = `${API_URL}/validate-code/`
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, code }),
-    }
-
-    try {
-      const response = await fetch(url, options)
-      const responseData = await response.json()
-
-      if (response.ok) {
-        console.log('Código validado com sucesso!')
-      } else {
-        const error: string = responseData.error
-        setError(error)
-      }
-    } catch (error) {
-      console.error(error)
-    }
+  function onSubmit(values: z.infer<typeof verificationSchema>) {
+    mutate(values)
   }
 
   return (
     <div className="max-w-2xl mx-auto p-6 grid gap-6">
-      <form
-        onSubmit={handleSubmit}
-        className="border rounded-2xl p-6 shadow-sm bg-white grid gap-4"
-      >
-        <Image
-          alt="Logo da Symcomp"
-          src="/logo/symcomp.png"
-          width={80}
-          height={80}
-          className="mx-auto"
-        />
-
-        <h2 className="text-xl font-semibold">Verificar email</h2>
-
-        <p className="text-sm">
-          Um código de verificação foi enviado para o email{' '}
-          <span className="font-mono bg-rose-200 p-1">{email}</span>. Insira o código
-          abaixo para finalizar o cadastro.
-        </p>
-
-        <label className="grid">
-          Código
-          <input
-            type="text"
-            name="code"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className="border rounded p-2 mt-1"
-          />
-          <span className="text-sm text-red-600 ml-3">{error}</span>
-        </label>
-
-        <button
-          type="submit"
-          disabled={!isFormValid}
-          className={`bg-rose-600 text-white rounded px-4 py-2 mt-2 ${isFormValid ? 'hover:bg-rose-700' : 'opacity-80'}`}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="border rounded-2xl p-6 shadow-sm bg-white grid gap-4"
         >
-          Verificar
-        </button>
-      </form>
+          <Image
+            alt="Logo da Symcomp"
+            src="/logo/symcomp.png"
+            width={80}
+            height={80}
+            className="mx-auto"
+          />
+
+          <h2 className="text-xl font-semibold">Verificar email</h2>
+
+          <p className="text-sm">
+            Um código de verificação foi enviado para o email{' '}
+            <span className="font-mono bg-rose-200 p-1">{form.getValues().email}</span>.
+            Insira o código abaixo para finalizar o cadastro.
+          </p>
+
+          <FormField
+            control={form.control}
+            name="code"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Código</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className={`bg-rose-600 text-white rounded px-4 py-2 mt-2 ${isPending ? 'hover:bg-rose-700' : 'opacity-80'}`}
+          >
+            Verificar
+          </button>
+        </form>
+      </Form>
     </div>
   )
 }
