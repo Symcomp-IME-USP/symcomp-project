@@ -1,154 +1,133 @@
 'use client'
 
-import { useState } from 'react'
-import { ChangeEvent, FormEvent } from 'react'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
+
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import RegisterUser from '@/lib/http/register-user'
 
 // Representa os campos do formulário.
-type Fields = {
-  name: string
-  email: string
-  password: string
-}
-
-// Representa um feedback retornado pelo servidor após o formulário ser enviado.
-type Feedback = {
-  name: string[]
-  email: string[]
-  password: string[]
-}
-
-const emptyFeedback: Feedback = { name: [], email: [], password: [] }
+const formSchema = z.object({
+  name: z.string(),
+  email: z.email(),
+  password: z.string(),
+})
 
 export default function CadastroPage() {
   const router = useRouter()
 
-  const [fields, setFields] = useState<Fields>({ name: '', email: '', password: '' })
-  // Essa variável contém, se existirem, erros relacionados aos campos do formulário.
-  const [feedback, setFeedback] = useState<Feedback>(emptyFeedback)
-  // O formulário só é enviado quando nenhum campo está vazio.
-  const isFormValid =
-    fields.name.length > 0 && fields.email.length > 0 && fields.password.length > 0
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+  })
 
-  // Atualiza os campos do formulário.
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFields((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
+  const { isPending, mutate } = useMutation({
+    mutationFn: async (values: z.infer<typeof formSchema>) => {
+      return await RegisterUser(values)
+    },
+    onSuccess: (data) => {
+      console.log('Cadastro realizado com sucesso:', data)
+      // Salva o email no localStorage.
+      // localStorage.setItem('email', fields.email)
+      localStorage.setItem('email', form.getValues().email)
 
-  // Trata o envio do formulário.
-  const handleSubmit = async (e: FormEvent<HTMLDivElement>) => {
-    e.preventDefault()
+      // Redireciona para a página de verificação.
+      router.push('/semana/cadastro/verificar')
+    },
+    onError: (error) => {
+      console.error('Erro no cadastro:', error)
+    },
+  })
 
-    const url = `${API_URL}/register/`
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(fields),
-    }
-
-    // Realiza a requisição.
-    try {
-      const response = await fetch(url, options)
-      const responseData = await response.json()
-
-      console.log(responseData)
-
-      if (response.ok) {
-        setFeedback(emptyFeedback)
-
-        // Salva o email no localStorage.
-        localStorage.setItem('email', fields.email)
-        // Redireciona para a página de verificação.
-        router.push('/semana/cadastro/verificar')
-      } else {
-        setFeedback(responseData)
-      }
-    } catch (error) {
-      console.error(error)
-    }
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    mutate(values)
   }
 
   return (
-    <div onSubmit={handleSubmit} className="max-w-5xl mx-auto p-6 grid gap-6">
-      <form className="border rounded-2xl p-6 shadow-sm bg-white grid gap-4">
-        <Image
-          alt="Logo da Symcomp"
-          src="/logo/symcomp.png"
-          width={80}
-          height={80}
-          className="mx-auto"
-        />
-
-        <h2 className="text-xl font-semibold">Cadastrar</h2>
-
-        <label className="grid">
-          Nome
-          <input
-            type="text"
-            name="name"
-            value={fields.name}
-            onChange={handleChange}
-            className="border rounded p-2 mt-1"
-          />
-          {feedback.name?.map((password, index) => (
-            <span key={index} className="text-sm text-red-600 ml-3">
-              {password}
-            </span>
-          ))}
-        </label>
-
-        <label className="grid">
-          Email
-          <input
-            type="email"
-            name="email"
-            value={fields.email}
-            onChange={handleChange}
-            className="border rounded p-2 mt-1"
-          />
-          {feedback.email?.map((password, index) => (
-            <span key={index} className="text-sm text-red-600 ml-3">
-              {password}
-            </span>
-          ))}
-        </label>
-
-        <label className="grid">
-          Senha
-          <input
-            type="text"
-            name="password"
-            value={fields.password}
-            onChange={handleChange}
-            className="border rounded p-2 mt-1"
-          />
-          {feedback.password?.map((password, index) => (
-            <span key={index} className="text-sm text-red-600 ml-3">
-              {password}
-            </span>
-          ))}
-        </label>
-
-        <button
-          type="submit"
-          disabled={!isFormValid}
-          className={`bg-rose-600 text-white rounded px-4 py-2 mt-2 ${isFormValid ? 'hover:bg-rose-700' : 'opacity-80'}`}
+    <div className="max-w-5xl mx-auto p-6 grid gap-6">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="border rounded-2xl p-6 shadow-sm bg-white grid gap-4"
         >
-          Registrar
-        </button>
-      </form>
+          <Image
+            alt="Logo da Symcomp"
+            src="/logo/symcomp.png"
+            width={80}
+            height={80}
+            className="mx-auto"
+          />
+
+          <h2 className="text-xl font-semibold">Cadastrar</h2>
+
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nome</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Senha</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className={`bg-rose-600 text-white rounded px-4 py-2 mt-2 ${isPending ? 'hover:bg-rose-700' : 'opacity-80'}`}
+          >
+            Registrar
+          </button>
+        </form>
+      </Form>
     </div>
   )
 }
-
-// TODO: direcionar usuário para a página de validação após enviar o formulário.
-// TODO: Evitar que o usuário clique e envie o formulário múltiplas vezes.
