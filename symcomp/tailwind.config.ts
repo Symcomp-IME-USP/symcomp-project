@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss'
 
-const config = {
+const config: Config = {
   darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -8,7 +8,6 @@ const config = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
-  prefix: '',
   theme: {
     container: {
       center: true,
@@ -19,61 +18,23 @@ const config = {
     },
     extend: {
       fontFamily: {
-        courier: 'Courier Prime',
-        mont: 'Montserrat',
-        dm: 'DM Sans',
-      },
-      boxShadow: {
-        solid: '5px 5px 0 0 black',
+        courier: ['"Courier Prime"', 'monospace'],
+        mont: ['Montserrat', 'sans-serif'],
+        dm: ['"DM Sans"', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        background: '#003049',
+        background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: '#FF006E',
+          DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
-          DEFAULT: '#FFBE0C',
+          DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
-        },
-        bc: {
-          white: {
-            DEFAULT: '#F1F1F1',
-          },
-          caramel: {
-            DEFAULT: '#C0771B',
-          },
-          brown: {
-            DEFAULT: '#47160F',
-          },
-          black: {
-            DEFAULT: '#1E1E1E',
-          },
-        },
-        'sc-2025': {
-          primary: {
-            DEFAULT: '#ffbe0b',
-          },
-          secondary: {
-            DEFAULT: '#b25cca',
-          },
-          background: {
-            DEFAULT: '#149d9c',
-          },
-          foreground: {
-            DEFAULT: '#fefefe',
-          },
-          contrast: {
-            DEFAULT: '#003049',
-          },
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
@@ -83,6 +44,10 @@ const config = {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
@@ -91,11 +56,27 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        bc: {
+          white: '#F1F1F1',
+          caramel: '#C0771B',
+          brown: '#47160F',
+          black: '#1E1E1E',
+        },
+        'sc-2025': {
+          primary: '#ffbe0b',
+          secondary: '#b25cca',
+          background: '#149d9c',
+          foreground: '#fefefe',
+          contrast: '#003049',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      boxShadow: {
+        solid: '5px 5px 0 0 black',
       },
       keyframes: {
         'accordion-down': {
@@ -106,13 +87,19 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-500%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        marquee: 'marquee 100s linear infinite',
       },
     },
   },
-} satisfies Config
+  plugins: [],
+}
 
 export default config
