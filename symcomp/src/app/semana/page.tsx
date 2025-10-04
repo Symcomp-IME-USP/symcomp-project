@@ -1,5 +1,7 @@
 import Image from 'next/image'
 
+import ParticleBackground from './particles'
+
 export default function Semana() {
   let patrocinadores = [
     { nome: 'Alura', imgSrc: 'alura.svg', height: 121, width: 262 },
@@ -24,6 +26,7 @@ export default function Semana() {
 
   return (
     <div className="w-full max-h-svh overflow-hidden flex flex-col items-center">
+      <ParticleBackground />
       <div className="mt-[42px] flex flex-col items-center">
         <h2 className="text-5xl">SYMCOMP</h2>
         <span className="text-xl">APRESENTA</span>
