@@ -1,4 +1,4 @@
-import './globals.css'
+import '../styles/globals.css'
 
 import { Inter } from 'next/font/google'
 
@@ -11,7 +11,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-background text-foreground`}>
         <Providers>{children}</Providers>
       </body>
     </html>
