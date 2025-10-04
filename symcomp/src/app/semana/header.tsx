@@ -1,15 +1,11 @@
-import Link from 'next/link'
-
-import { Button } from '@/components/ui/button'
-import { semanaLogin } from '@/lib/routes'
+import Image from 'next/image'
 
 export default function SemanaHeader() {
   return (
-    <div>
-      <nav></nav>
-      <Link href={semanaLogin}>
-        <Button>Entrar</Button>
-      </Link>
+    <div className="p-4 w-full flex flex-row justify-between">
+      <Image src="sc-2025/ime-usp.svg" alt="" width={52} height={59} />
+      <Image src="sc-2025/logo-symcomp.svg" alt="" width={50} height={50} />
+      <Image src="sc-2025/2025.svg" alt="" width={38} height={52} />
     </div>
   )
 }

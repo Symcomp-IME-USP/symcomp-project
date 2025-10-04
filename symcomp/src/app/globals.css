@@ -81,3 +81,17 @@
   box-shadow: 5px 5px 0 black;
   border: 5px solid black;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-500%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 100s linear infinite;
+}
