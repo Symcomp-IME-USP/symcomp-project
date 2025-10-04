@@ -1,11 +1,18 @@
+# Imagem base
 FROM node:lts-alpine3.22
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml* ./
 
-RUN npm install
+RUN npm install -g pnpm
+
+RUN pnpm install --frozen-lockfile
+
+COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+RUN pnpm build
+
+CMD ["pnpm", "start"]
