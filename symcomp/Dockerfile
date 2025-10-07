@@ -3,13 +3,13 @@
 FROM node:lts-alpine3.22 AS base
 WORKDIR /app
 # Ativa pnpm para gerenciamento de pacotes
-RUN corepack enable
+RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
 
 # --- Dependencies Stage ---
 # Responsável por instalar as dependências
 FROM base AS dependencies
 COPY package.json pnpm-lock.yaml ./
-RUN npm install --force
+RUN pnpm install --frozen-lockfile
 
 # --- Development Stage ---
 # Para desenvolvimento local. Utiliza as dependências instaladas
