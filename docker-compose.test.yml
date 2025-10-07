@@ -1,22 +1,28 @@
 services:
   postgres:
-    # Compose automatically detects the .env file, which is not the one we want (possibly?)
+    # Compose automatically detects the .env file. We can pass here a .env.test, or leave it as it is
     env_file:
-      - ./.env.test
+      - ./.env
     volumes:
       - postgres_test_data:/var/lib/postgresql/data
 
   backend:
     env_file:
-      - ./.env.test
+      - ./.env
+    volumes:
+    - ./symcomp-server:/app
     entrypoint: ["/bin/sh", "/app/entrypoint-test.sh"]
+    
   
   frontend:
     env_file:
-        - ./.env.test
+        - ./.env
     build:
       target: development
+    volumes:
+    - ./symcomp:/app
     command: echo "testing frontend?"
 
+#Ensures our development database isnt impacted
 volumes:
   postgres_test_data:

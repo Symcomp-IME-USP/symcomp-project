@@ -14,13 +14,18 @@ docker compose up --build backend postgres
 Or if you want to run the `frontend`, specify it at the end of the command
 
 ## Testing
-Run the custom, optimized script:
+The `./run-tests.sh` script implements testing. To run for the first time, use:
+```
+./run-tests.sh --build
+```
+This will build and run frontend (TODO) and backend tests.
+Testing is implemented aiming for development. So, docker-compose.test implements volume binding in order to avoid multiple builds. You can test after building for the first time with:
 ```
 ./run-tests.sh
 ```
 
 ## Production
-Wether you're actually deploying on the machine or just testing the deployment:
+Use the `docker-compose.prod.yml` file:
 ```
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 ```
