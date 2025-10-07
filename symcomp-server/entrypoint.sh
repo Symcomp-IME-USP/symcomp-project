@@ -7,9 +7,10 @@ echo "Waiting for database to be ready..."
 python wait-for-db.py
 
 # Apply database migrations (NOT RECOMMENDED TO PUT THE MAKEMIGRATIONS HERE)
-# But haven't found any other workaround
+# But haven't found any other workaround. Possibly what you can do is makemigraitons when first running to ensure migrations file, and then
+# Remove the makemigrations line
 echo "Creating and applying database migrations..."
-python manage.py makemigrations
+python manage.py makemigrations api
 python manage.py migrate
 
 if [ "$DJANGO_ENV" = "production" ]; then

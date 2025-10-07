@@ -1,22 +1,22 @@
 services:
   postgres:
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}_test
-    healthcheck:
-      # Por algum motivo o healthcheck do compose.yml não recebe essa nova variável
-      # Então coloquei o override aqui direto mesmo
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}_test"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-  
+    # Compose automatically detects the .env file, which is not the one we want (possibly?)
+    env_file:
+      - ./.env.test
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+
   backend:
-    environment:
-        DB_NAME: ${POSTGRES_DB}_test
-        DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${DB_PORT}/${POSTGRES_DB}_test
+    env_file:
+      - ./.env.test
     entrypoint: ["/bin/sh", "/app/entrypoint-test.sh"]
   
   frontend:
+    env_file:
+        - ./.env.test
     build:
       target: development
     command: echo "testing frontend?"
+
+volumes:
+  postgres_test_data:

@@ -8,8 +8,11 @@ COMPOSE_FILES="-f docker-compose.yml -f docker-compose.test.yml"
 echo "--- Tearing down old environment (if any) ---"
 docker-compose $COMPOSE_FILES down -v
 
-echo "--- Building images for testing ---"
-docker-compose $COMPOSE_FILES build
+# Only runs the build if necessary. You can call this part with ./run-tests.sh --build, or without the --build for quicker cycles
+if [ "$1" = "--build" ]; then
+  echo "--- Building images for testing ---"
+  docker-compose $COMPOSE_FILES build
+fi
 
 echo "--- Starting database for tests ---"
 docker-compose $COMPOSE_FILES up -d postgres
