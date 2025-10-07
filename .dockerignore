@@ -1,0 +1,53 @@
+# Defines files to be ignored when building docker images
+
+# Ignore all Git-related files and directories
+.git/
+.gitignore
+
+# Ignore all Docker-related files, they are not needed inside the image
+Dockerfile
+Dockerfile.prod
+docker-compose.yml
+.dockerignore
+
+# Ignore IDE and OS-specific files
+.vscode/
+.idea/
+.DS_Store
+*~
+Thumbs.db
+
+# Ignore top-level documentation
+README.md
+
+# Ignore all large dependency folders that should be installed INSIDE the container
+# The double-asterisk (**) ensures it catches them in any subdirectory
+**/node_modules
+**/venv
+**/.venv
+**/env
+**/ENV
+
+# Ignore all build outputs and caches from the build context
+**/.next
+**/out
+**/build
+**/dist
+**/__pycache__
+
+# Ignore all testing and coverage artifacts
+**/coverage
+**/htmlcov
+**/.coverage
+**/.pytest_cache
+**/*.egg-info
+
+# Ignore linter and type-checker caches
+**/.mypy_cache
+**/ruff_cache
+
+# Ignore local environment files and logs
+**/.env
+**/.env.*
+**/*.log
+**/npm-debug.log*
