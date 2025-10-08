@@ -1,0 +1,16 @@
+services:
+  postgres:
+    restart: unless-stopped
+  
+  backend:
+    build:
+      # docker compose will build the image from the local Dockerfile
+      # on the server, using the final production stage by default
+      context: ./symcomp-server
+    restart: unless-stopped
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+
+  frontend:
+    build:
+      context: ./symcomp
+    restart: unless-stopped

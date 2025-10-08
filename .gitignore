@@ -1,0 +1,109 @@
+# =============================================================================
+# GLOBAL
+# =============================================================================
+
+# Environment variables
+.env
+.env.*
+!.env.example
+.envrc
+
+# IDE & Editor Configuration
+.vscode/
+.idea/
+
+# macOS, Windows, and Linux System Files
+.DS_Store
+*~
+Thumbs.db
+
+# Misc
+*.pem
+
+
+# =============================================================================
+# FRONTEND
+# =============================================================================
+
+# Dependencies
+symcomp/node_modules/
+symcomp/.pnp/
+symcomp/.pnp.js
+symcomp/.yarn/install-state.gz
+symcomp/package-lock.json
+
+# Testing
+symcomp/coverage/
+
+# Next.js build output
+symcomp/.next/
+symcomp/out/
+
+# Production build folder
+symcomp/build/
+
+# Debug logs
+symcomp/npm-debug.log*
+symcomp/yarn-debug.log*
+symcomp/yarn-error.log*
+
+# Local env files specific to symcomp
+symcomp/.env*.local
+
+# Vercel deployment folder
+symcomp/.vercel/
+
+# TypeScript build info
+symcomp/*.tsbuildinfo
+symcomp/next-env.d.ts
+
+
+# =============================================================================
+# BACKEND (Django / Python)
+# =============================================================================
+
+# Python build artifacts and bytecode
+symcomp-server/__pycache__/
+symcomp-server/**/*.py[cod]
+symcomp-server/**/*.pyo
+symcomp-server/**/*.pyd
+symcomp-server/**/*.so
+symcomp-server/build/
+symcomp-server/dist/
+symcomp-server/*.egg-info/
+symcomp-server/.eggs/
+
+# Django local database and logs
+symcomp-server/*.sqlite3
+symcomp-server/db.sqlite3
+symcomp-server/*.log
+
+# Django static and media files
+symcomp-server/media/
+symcomp-server/staticfiles/
+symcomp-server/static_root/
+
+# Python Virtual Environments
+symcomp-server/venv/
+symcomp-server/env/
+symcomp-server/.venv/
+symcomp-server/ENV/
+
+# Testing, Coverage, and Caching
+symcomp-server/htmlcov/
+symcomp-server/.coverage
+symcomp-server/.tox/
+symcomp-server/.nox/
+symcomp-server/.cache/
+symcomp-server/.pytest_cache/
+
+# Linter and Type Checker Caches
+symcomp-server/.mypy_cache/
+symcomp-server/.dmypy.json
+symcomp-server/.pyre/
+symcomp-server/.pytype/
+symcomp-server/.pylint.d/
+symcomp-server/ruff_cache/
+
+# Django Migrations (for now at least)
+symcomp-server/api/migrations
