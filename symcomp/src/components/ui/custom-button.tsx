@@ -17,7 +17,7 @@ export const CustomButton = ({ children, color, disabled }: CustomButtonProps) =
       className={cn(
         'font-extrabold py-2 symcomp-border mb-[5px]',
         color === 'yellow' ? 'bg-secondary' : '',
-        color === 'pink' ? 'bg-primary hover:bg-secondary' : '',
+        color === 'pink' ? 'bg-symcomp-primary hover:bg-secondary' : '',
         color === 'white'
           ? 'bg-white hover:bg-secondary hover:text-white text-black'
           : '',

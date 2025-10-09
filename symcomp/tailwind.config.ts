@@ -56,6 +56,17 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        symcomp: {
+          background: '#003049',
+          primary: {
+            DEFAULT: '#FF006E',
+            foreground: 'hsl(var(--primary-foreground))',
+          },
+          secondary: {
+            DEFAULT: '#FFBE0C',
+            foreground: 'hsl(var(--secondary-foreground))',
+          },
+        },
         bc: {
           white: '#F1F1F1',
           caramel: '#C0771B',
@@ -67,7 +78,8 @@ const config: Config = {
           secondary: '#b25cca',
           background: '#149d9c',
           foreground: '#fefefe',
-          contrast: '#003049',
+          contrast: '#0E0A47',
+          accent: '#D6E2FF',
         },
       },
       borderRadius: {
@@ -99,7 +111,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
 }
 
 export default config

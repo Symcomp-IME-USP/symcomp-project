@@ -22,7 +22,7 @@ export const Footer = () => {
   ]
 
   return (
-    <div className="p-6 flex flex-col items-center justify-center gap-2 bg-background">
+    <div className="p-6 flex flex-col items-center justify-center gap-2 bg-symcomp-background">
       <h2 className="text-2xl font-bold text-white">OFERECIMENTO</h2>
       <div className="flex flex-row gap-[64px] w-full items-center justify-center">
         <Image

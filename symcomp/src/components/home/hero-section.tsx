@@ -17,10 +17,10 @@ export const HeroSection = () => {
   ]
 
   return (
-    <div id="home" className="bg-background h-[calc(100vh-100px)]">
+    <div id="home" className="bg-symcomp-background h-[calc(100vh-100px)]">
       <div className="flex flex-col justify-between items-center h-full py-[100px]">
         <div className="px-4 flex flex-col gap-4 sm:w-2/3">
-          <h1 className="font-extrabold text-black text-xl sm:text-4xl px-4 sm:px-8 py-2 bg-secondary shadow-solid w-fit border-4 border-black">
+          <h1 className="font-extrabold text-black text-xl sm:text-4xl px-4 sm:px-8 py-2 bg-symcomp-secondary shadow-solid w-fit border-4 border-black">
             SIMPÓSIO DA COMPUTAÇÃO
           </h1>
           <p className="text-white text-lg sm:text-2xl sm:w-2/5 hyphens-auto ">
@@ -34,7 +34,7 @@ export const HeroSection = () => {
             {highlights.map((highlight) => (
               <div
                 key={highlight.label}
-                className="flex flex-col justify-center items-center gap-4 border-4 border-black shadow-solid bg-secondary p-4 sm:p-10"
+                className="flex flex-col justify-center items-center gap-4 border-4 border-black shadow-solid bg-symcomp-secondary p-4 sm:p-10"
               >
                 <span className="text-black font-extrabold text-xs sm:text-lg text-center">
                   {highlight.label.toUpperCase()}

@@ -1,4 +1,6 @@
 ignoredBuiltDependencies:
   - '@tsparticles/engine'
+  - core-js-pure
+  - esbuild
   - react-tsparticles
   - tsparticles-engine

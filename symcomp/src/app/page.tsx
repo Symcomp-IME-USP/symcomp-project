@@ -48,7 +48,7 @@ export default function Home() {
     <main className="bg-white h-svh">
       <div className="grid grid-rows-[auto,1fr] h-full">
         <Header
-          backgroundColor="bg-background"
+          backgroundColor="bg-symcomp-background"
           color={color}
           sections={sections}
           logo={logo}

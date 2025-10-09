@@ -1,6 +1,6 @@
-import { Silkscreen } from 'next/font/google'
 import { ReactNode } from 'react'
 
+import { silkscreen } from '@/lib/font'
 import { cn } from '@/lib/utils'
 
 import SemanaHeader from './header'
@@ -8,11 +8,6 @@ import SemanaHeader from './header'
 interface SemanaLayoutProps {
   children: ReactNode
 }
-
-const silkscreen = Silkscreen({
-  weight: ['400', '700'], // estilos disponíveis
-  subsets: ['latin'], // escolha os subsets necessários
-})
 
 export const metadata = {
   title: 'SYMCOMP | Semana da Computação',
