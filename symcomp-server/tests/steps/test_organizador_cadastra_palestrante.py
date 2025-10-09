@@ -29,12 +29,12 @@ def contexto():
     return {}
 
 @pytest.mark.django_db
-@scenario('../cadastrar_palestrantes.feature', 'Organizador cadastra palestrante que não é usuário')
+@scenario('../features/cadastrar_palestrantes.feature', 'Organizador cadastra palestrante que não é usuário')
 def test_cadastrar_palestrante_que_nao_e_usuario():
     pass
 
 @pytest.mark.django_db
-@scenario('../cadastrar_palestrantes.feature', 'Organizador cadastra palestrante que já é usuário')
+@scenario('../features/cadastrar_palestrantes.feature', 'Organizador cadastra palestrante que já é usuário')
 def test_cadastrar_palestrante_que_ja_e_usuario():
     pass
 

@@ -37,23 +37,28 @@ def contexto():
     return {}
 
 @pytest.mark.django_db
-@scenario('../adicionar_atividades_no_cronograma.feature', 'Um organizador deve conseguir adicionar no cronograma uma atividade')
+@scenario('../features/adicionar_atividades_no_cronograma.feature', 'Um organizador deve conseguir adicionar no cronograma uma atividade')
 def test_adiciona_atividade_no_cronograma():
     pass
 
 @pytest.mark.django_db
-@scenario('../adicionar_atividades_no_cronograma.feature', 'Um usuário que não é organizador não deve conseguir adicionar uma atividade no cronograma')
+@scenario('../features/adicionar_atividades_no_cronograma.feature', 'Um usuário que não é organizador não deve conseguir adicionar uma atividade no cronograma')
 def test_nao_organizador_adiciona_atividade_no_cronograma():
     pass
 
 @pytest.mark.django_db
-@scenario('../adicionar_atividades_no_cronograma.feature', 'Um organizador não deve poder adicionar uma atividade fora dos horários do cronograma')
+@scenario('../features/adicionar_atividades_no_cronograma.feature', 'Um organizador não deve poder adicionar uma atividade fora dos horários do cronograma')
 def test_adiciona_atividade_fora_do_cronograma():
     pass
 
 @pytest.mark.django_db
-@scenario('../adicionar_atividades_no_cronograma.feature', 'Um organizador não deve poder adicionar uma atividade que não está livre no cronograma')
+@scenario('../features/adicionar_atividades_no_cronograma.feature', 'Um organizador não deve poder adicionar uma atividade que não está livre no cronograma')
 def test_adiciona_uma_atividade_no_horario_de_outra():
+    pass
+
+@pytest.mark.django_db
+@scenario('../features/adicionar_atividades_no_cronograma.feature', 'Um QR code deve ser gerado automaticamente ao criar uma atividade')
+def test_qr_code_gerado_para_atividade():
     pass
 
 # --------- GIVEN ----------
@@ -193,6 +198,21 @@ def atividade_foi_adicionada(client, contexto):
     atividades = response.data
 
     assert [atividade["comeca_as"] == "2025-10-20T12:00:00" for atividade in atividades]
+
+@then('um QR code deve ser gerado para a atividade')
+def qr_code_foi_gerado(client, contexto):
+    client.credentials(HTTP_AUTHORIZATION=f"Bearer {contexto['token']}")
+
+    response = client.get('/api/atividade/')
+    assert response.status_code == 200
+    atividades = response.data
+    assert len(atividades) > 0
+
+    atividade = atividades[0]
+    assert 'qr_code' in atividade
+    assert atividade['qr_code'] is not None
+    assert '/qr_codes/' in atividade['qr_code']
+    assert atividade['qr_code'].endswith('.png')
 
 @then('a atividade não deve ser adicionada')
 def atividade_nao_foi_adicionada(client, contexto):

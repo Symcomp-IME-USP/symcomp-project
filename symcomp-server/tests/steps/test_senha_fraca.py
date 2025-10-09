@@ -15,27 +15,27 @@ def contexto():
     return {}
 
 @pytest.mark.django_db
-@scenario('../cadastrar_usuario.feature', 'Senha sem letras')
+@scenario('../features/cadastrar_usuario.feature', 'Senha sem letras')
 def test_cadastro_com_senha_sem_letra():
     pass
 
 @pytest.mark.django_db
-@scenario('../cadastrar_usuario.feature', 'Senha sem letras minúsculas')
+@scenario('../features/cadastrar_usuario.feature', 'Senha sem letras minúsculas')
 def test_cadastro_com_senha_sem_letras_minusculas():
     pass
 
 @pytest.mark.django_db
-@scenario('../cadastrar_usuario.feature', 'Senha sem letras maiúsculas')
+@scenario('../features/cadastrar_usuario.feature', 'Senha sem letras maiúsculas')
 def test_cadastro_com_senha_sem_letras_maiusculas():
     pass
 
 @pytest.mark.django_db
-@scenario('../cadastrar_usuario.feature', 'Senha sem números')
+@scenario('../features/cadastrar_usuario.feature', 'Senha sem números')
 def test_cadastro_com_senha_sem_numeros():
     pass
 
 @pytest.mark.django_db
-@scenario('../cadastrar_usuario.feature', 'Senha com menos de 8 caracteres')
+@scenario('../features/cadastrar_usuario.feature', 'Senha com menos de 8 caracteres')
 def test_cadastro_com_senha_com_menos_de_oito_caracteres():
     pass
 

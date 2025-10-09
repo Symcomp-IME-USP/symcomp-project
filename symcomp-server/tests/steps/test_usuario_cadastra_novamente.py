@@ -24,7 +24,7 @@ def contexto():
     return {}
 
 @pytest.mark.django_db
-@scenario("../cadastrar_usuario.feature", "Usuário faz cadastro, mas já está cadastrado")
+@scenario("../features/cadastrar_usuario.feature", "Usuário faz cadastro, mas já está cadastrado")
 def test_usuario_cadastra_novamente():
     pass
 

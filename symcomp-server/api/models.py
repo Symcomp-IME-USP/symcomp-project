@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.db.models import Sum, F, ExpressionWrapper, IntegerField
+from .lib.qr_code_generator import generate_qr_code
 import random
 
 ## Para geração de usernames (Nota: é possível passar isso para um arquivo de texto depois)
@@ -37,16 +39,6 @@ class Papel(models.TextChoices):
     ORGANIZADOR = 'organizador'
     PALESTRANTE = 'palestrante'
     PARTICIPANTE = 'participante'
-
-class StatusAtividade(models.TextChoices):
-    PROVISORIA = 'provisoria'
-    CONFIRMADA = 'confirmada'
-
-class TipoAtividade(models.TextChoices):
-    PALESTRA = 'palestra'
-    ENCERRAMENTO = 'encerramento'
-    CONVERSA = 'conversa'
-    COFFEE_BREAK = 'coffee_break'
 
 class PerfilUsuario(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='perfil')
@@ -112,6 +104,18 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+    
+    def create_staff(self, email, name, password, **kwargs):
+        # Cria superusuário e dá acesso máximo
+        user = self.create_user(email, name, password, **kwargs)
+
+        user.is_staff = True
+        user.is_active = True
+        user.eh_verificado = True
+        user.eh_organizador = True
+        
+        user.save(using=self._db)
+        return user
 
     def create_superuser(self, email, name, password, **kwargs):
         # Cria superusuário e dá acesso máximo
@@ -150,6 +154,12 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+    def get_user(self, email):
+        try:
+            return User.objects.get(email=email).id
+        except User.DoesNotExist:
+            return None
 
 class Jogador(models.Model):
     user = models.OneToOneField(
@@ -181,12 +191,6 @@ class EmailVerificationCode(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-
-class Atividade(models.Model):
-    tipo = models.CharField(max_length=30, choices=TipoAtividade.choices)
-    status = models.CharField(max_length=30, choices=StatusAtividade.choices, default=StatusAtividade.PROVISORIA)
-    comeca_as = models.DateTimeField(unique=True)
-    termina_as = models.DateTimeField(unique=True)
-
-    def __str__(self):
-        return self.status
+    
+class Certificate(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

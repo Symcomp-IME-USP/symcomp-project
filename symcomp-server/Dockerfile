@@ -1,8 +1,8 @@
 # --- Base Stage ---
 FROM python:3.13-slim AS base
 # Seta variáveis env para o Python
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=backend.settings
 WORKDIR /app
 
 # --- Builder Stage ---

@@ -15,7 +15,7 @@ def contexto():
     return {}
 
 @pytest.mark.django_db
-@scenario('../cadastrar_usuario.feature', 'Senha com mais de 510 caracteres')
+@scenario('../features/cadastrar_usuario.feature', 'Senha com mais de 510 caracteres')
 def test_cadastro_com_senha_de_mais_de_255_caracteres():
     pass
 

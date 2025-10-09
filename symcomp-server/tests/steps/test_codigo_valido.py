@@ -20,7 +20,7 @@ def codigo_verificacao():
     return "123456"
 
 @pytest.mark.django_db
-@scenario('../cadastrar_usuario.feature', 'Usuário valida código e efetiva login')
+@scenario('../features/cadastrar_usuario.feature', 'Usuário valida código e efetiva login')
 def test_cadastro_com_sucesso():
     pass
 
