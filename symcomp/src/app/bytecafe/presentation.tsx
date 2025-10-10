@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import BCButton from './bcbutton'
 
 interface SectionProps {
@@ -23,11 +25,13 @@ export const BCPresentation = () => {
       id="presentation"
       className="relative flex flex-col justify-center items-center bg-bc-brown text-bc-white min-h-screen px-8 font-mono overflow-x-hidden overflow-y-hidden w-full"
     >
-      <img
+      <Image
         alt="Logo transparente do ByteCafé"
         src="/logo/bc_black.png"
         className="absolute left-40 opacity-20 h-[20rem] md:h-[40rem] md:left-60 w-auto lg:h-[50rem] lg:left-[40rem]"
         style={{ zIndex: 2 }}
+        height={300}
+        width={300}
       />
       <div className="flex flex-col lg:w-[65rem] w-full">
         <div className="h-[109px]" />
