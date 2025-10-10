@@ -108,3 +108,5 @@ symcomp-server/ruff_cache/
 
 # Django Migrations (for now at least)
 symcomp-server/api/migrations
+*storybook.log
+storybook-static
