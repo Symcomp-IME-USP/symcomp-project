@@ -156,3 +156,28 @@ CORS_ALLOW_ALL_ORIGINS = True
 AUTH_USER_MODEL = 'api.User'
 
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+
+if os.getenv('DJANGO_ENV') == 'production':
+    REST_FRAMEWORK = {
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            # I think we need more stuff here
+        )
+    }
+else:
+    # Em desenvolvimento, mantenha a API navegável
+    REST_FRAMEWORK = {
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            'rest_framework.renderers.BrowsableAPIRenderer',
+        ),
+        "DEFAULT_PERMISSION_CLASSES": [
+            "rest_framework.permissions.IsAuthenticated",
+        ],
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework_simplejwt.authentication.JWTAuthentication",
+        ],
+        "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    }
+
+
