@@ -8,9 +8,14 @@ services:
       # on the server, using the final production stage by default
       context: ./symcomp-server
     restart: unless-stopped
-    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120
 
   frontend:
     build:
       context: ./symcomp
+    ports:
+      - "3000:3000"
     restart: unless-stopped
+

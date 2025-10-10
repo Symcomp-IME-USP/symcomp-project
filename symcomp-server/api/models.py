@@ -1,8 +1,7 @@
-from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-from django.db.models import Sum, F, ExpressionWrapper, IntegerField
 from .lib.qr_code_generator import generate_qr_code
 import random
 
