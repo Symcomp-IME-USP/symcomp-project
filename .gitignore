@@ -3,6 +3,7 @@
 # =============================================================================
 
 # Environment variables
+.bash_history
 .env
 .env.*
 !.env.example
