@@ -24,7 +24,7 @@ if not User.objects.filter(email=admin_email).exists():
     )
 
 # Staff
-staff_email = os.getenv("SEEDER_STAFF_EMAIL", "staff@symcomp.ime.usp.br")
+staff_email = os.getenv("SEEDER_STAFF_EMAIL", "jonathas@symcomp.ime.usp.br")
 staff_password = os.getenv("SEEDER_STAFF_PASSWORD", "jojotadinho")
 
 if not User.objects.filter(email=staff_email).exists():
