@@ -18,6 +18,8 @@ if [ "$DJANGO_ENV" = "production" ]; then
   python manage.py collectstatic --noinput
 fi
 
+python seed.py
+
 # Then exec the container's main process (what's set as CMD in the Dockerfile,
 # or passed to the 'command' instruction in docker-compose.yml).
 exec "$@"

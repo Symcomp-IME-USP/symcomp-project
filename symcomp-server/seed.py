@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import django
 from django.contrib.auth import get_user_model
 
@@ -9,15 +10,26 @@ User = get_user_model()
 
 print("Seeding database...")
 
-if not User.objects.filter(email="admin@example.com").exists():
+admin_email = os.getenv("SEEDER_ADMIN_EMAIL", "admin@symcomp.ime.usp.com")
+admin_password = os.getenv(
+    "SEEDER_ADMIN_PASSWORD",
+    "d36efcdb53a2e3d8030a15ac0fb0317f0e5e981cf4bf1c62afdc9bd3e5f81bcf"
+)
+
+if not User.objects.filter(email=admin_email).exists():
     User.objects.create_superuser(
-        email="admin@symcomp.ime.usp.br",
-        name="Administrador",
-        password="symcompmelhorquesemcomp"
+        email=admin_email,
+        name="Presidentes",
+        password=admin_password
     )
-if not User.objects.filter(email="jonathas@symcomp.ime.usp.br").exists():
+
+# Staff
+staff_email = os.getenv("SEEDER_STAFF_EMAIL", "staff@symcomp.ime.usp.br")
+staff_password = os.getenv("SEEDER_STAFF_PASSWORD", "jojotadinho")
+
+if not User.objects.filter(email=staff_email).exists():
     User.objects.create_staff(
-        email="jonathas@symcomp.ime.usp.br",
-        name="Jonathas Castilho",
-        password="jojotadinho",
+        email=staff_email,
+        name="staff Castilho",
+        password=staff_password,
     )
