@@ -19,11 +19,11 @@ export default function SemanaLayout({ children }: SemanaLayoutProps) {
   return (
     <div
       className={cn(
-        'h-svh w-full flex flex-col items-center flex-1 bg-[#110F0F] text-white',
+        'min-h-svh w-full flex flex-col items-center flex-1 bg-[#110F0F] text-white',
         silkscreen.className,
       )}
     >
-      <div className="max-w-[1024px] w-full">
+      <div className="max-w-[1024px] h-full flex-grow-0 w-full">
         <SemanaHeader />
         {children}
       </div>

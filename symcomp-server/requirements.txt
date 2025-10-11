@@ -7,8 +7,8 @@ Django==5.2.4
 django-allauth==65.9.0
 django-cors-headers==4.7.0
 djangorestframework==3.16.0
-djangorestframework_simplejwt==5.5.0
-dotenv==0.9.9
+djangorestframework-simplejwt==5.5.0
+python-dotenv==1.1.1
 drf-spectacular==0.28.0
 drf-spectacular-sidecar==2025.10.1
 gherkin-official==29.0.0
@@ -23,7 +23,7 @@ MarkupSafe==3.0.2
 packaging==25.0
 parse==1.20.2
 parse_type==0.6.4
-pillow==11.3.0
+Pillow==11.3.0
 pluggy==1.6.0
 psycopg2-binary==2.9.10
 Pygments==2.19.2
@@ -32,12 +32,10 @@ pypng==0.20220715.0
 pytest==8.4.1
 pytest-bdd==8.1.0
 pytest-django==4.11.1
-python-dotenv==1.1.1
 PyYAML==6.0.3
 qrcode==7.4.2
 referencing==0.36.2
 requests==2.32.4
-rest-framework-simplejwt==0.0.2
 rpds-py==0.27.1
 six==1.17.0
 sqlparse==0.5.3
@@ -45,3 +43,4 @@ typing_extensions==4.14.1
 uritemplate==4.2.0
 urllib3==2.5.0
 whitenoise==6.11.0
+gunicorn==21.2.0

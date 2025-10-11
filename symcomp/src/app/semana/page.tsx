@@ -25,49 +25,54 @@ export default function Semana() {
   ]
 
   return (
-    <div className="w-full max-h-svh overflow-hidden flex flex-col items-center">
+    <div className="w-full overflow-hidden h-full flex flex-col items-center">
       <ParticleBackground />
-      <div className="mt-[42px] flex flex-col items-center">
-        <h2 className="text-5xl">SYMCOMP</h2>
-        <span className="text-xl">APRESENTA</span>
-      </div>
-      <div className="flex w-full h-[350px] flex-col justify-center items-center">
-        <Image
-          src="sc-2025/logo-colorida-symcomp.svg"
-          alt="Logo Symcomp"
-          width={223}
-          height={223}
-        />
-      </div>
-      <div className="flex flex-col gap-2 items-center">
-        <span className="text-xl animate-pulse">CARREGANDO...</span>
-        <Image
-          src="sc-2025/barra-carregamento.svg"
-          alt="Barra de carregamento"
-          width={227.65}
-          height={40}
-        />
+      <div className="p-10">
+        <div className="flex flex-col items-center">
+          <h2 className="text-5xl">SYMCOMP</h2>
+          <span className="text-xl">APRESENTA</span>
+        </div>
+        <div className="flex w-full py-[48px] flex-col justify-center items-center">
+          <Image
+            src="sc-2025/logo-colorida-symcomp.svg"
+            alt="Logo Symcomp"
+            width={223}
+            height={223}
+            className="size-[150px] lg:size-[223px]"
+          />
+        </div>
+        <div className="flex flex-col gap-2 items-center">
+          <span className="text-xl animate-pulse">CARREGANDO...</span>
+          <Image
+            src="sc-2025/barra-carregamento.svg"
+            alt="Barra de carregamento"
+            width={227.65}
+            height={40}
+          />
+        </div>
       </div>
 
       <span className="text-lg text-sc-2025-background w-[200px] text-center mt-[32px]">
         UM EVENTO PATROCINADO POR:
       </span>
-      <div className="relative w-full overflow-hidden mt-6">
-        <div className="flex animate-marquee">
-          {[...patrocinadores, ...patrocinadores].map((patrocinador, index) => (
-            <div
-              key={index}
-              className="flex justify-center items-center mx-[50px] lg:mx-[100px] shrink-0 size-[100px]"
-            >
-              <Image
-                src={`/sc-2025/patrocinadores/${patrocinador.imgSrc}`}
-                alt={`Logo do patrocinador ${patrocinador.nome}`}
-                width={150}
-                height={100}
-                className="object-contain"
-              />
-            </div>
-          ))}
+      <div>
+        <div className="relative w-full overflow-hidden mt-2">
+          <div className="flex animate-marquee">
+            {[...patrocinadores, ...patrocinadores].map((patrocinador, index) => (
+              <div
+                key={index}
+                className="flex justify-center items-center mx-[50px] lg:mx-[100px] shrink-0 size-[100px]"
+              >
+                <Image
+                  src={`/sc-2025/patrocinadores/${patrocinador.imgSrc}`}
+                  alt={`Logo do patrocinador ${patrocinador.nome}`}
+                  width={150}
+                  height={100}
+                  className="object-contain"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
